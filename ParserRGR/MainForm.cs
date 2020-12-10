@@ -88,15 +88,11 @@ namespace RGRRiverParser
             bool riverAlreadyExists = false;
             foreach (DataGridViewRow row in riversDataGridView.Rows)
             {
-                var a = (string)row.Cells[1].Value == river.name;
-                var b = (string)row.Cells[2].Value == river.length.ToString();
-                var c = (string)row.Cells[3].Value == river.source;
-                var d = (string)row.Cells[4].Value == river.mouth;
                 if (
-                    a &&
-                    b &&
-                    c &&
-                    d
+                    (string)row.Cells[1].Value == river.name &&
+                    ((double)row.Cells[2].Value).ToString() == river.length.ToString() &&
+                    (string)row.Cells[3].Value == river.source &&
+                    (string)row.Cells[4].Value == river.mouth
                     )
                 {
                     riverAlreadyExists = true;
