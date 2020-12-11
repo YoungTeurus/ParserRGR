@@ -112,8 +112,32 @@ namespace RGRRiverParser
         {
             this.Validate();
             this.riversBindingSource.EndEdit();
+            foreach (DataGridViewRow newRow in riversDataGridView.Rows)
+            {
+                if ((int)newRow.Cells[0].Value > 0)
+                    continue;
+                bool riverAlreadyExists = false;
+                foreach (DataGridViewRow row in riversDataGridView.Rows)
+                {
+                    if (
+                    ((int)row.Cells[0].Value > 0) &&
+                    (string)row.Cells[1].Value == (string)newRow.Cells[1].Value &&
+                    ((double)row.Cells[2].Value).ToString() == ((double)newRow.Cells[2].Value).ToString() &&
+                    (string)row.Cells[3].Value == (newRow.Cells[3].Value != System.DBNull.Value ? (string)newRow.Cells[3].Value : "") &&
+                    (string)row.Cells[4].Value == (newRow.Cells[4].Value != System.DBNull.Value ? (string)newRow.Cells[4].Value : "")
+                    // (string)row.Cells[4].Value == (string)newRow.Cells[4].Value
+                    )
+                    {
+                        riverAlreadyExists = true;
+                        break;
+                    }
+                }
+                if (riverAlreadyExists)
+                {
+                    riversDataGridView.Rows.Remove(newRow);
+                }
+            }
             this.tableAdapterManager.UpdateAll(this.riversDataSet);
-
         }
 
         private void Form1_Load(object sender, EventArgs e)

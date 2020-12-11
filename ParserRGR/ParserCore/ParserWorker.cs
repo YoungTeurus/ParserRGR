@@ -67,6 +67,8 @@ namespace RGRRiverParser.Parser
                     }
                     if (!isWorking)
                     {
+                        OnNewData?.Invoke(rivers, doneLinksOnThisPage, linksOnThisPage);
+                        rivers.Clear();
                         OnCompleted?.Invoke(this);
                         return;
                     }
@@ -74,6 +76,8 @@ namespace RGRRiverParser.Parser
                 currentPage = parser.getNextPageLink(document);
                 if (currentPage == "" || ++currentPageCount >= maxPages)
                 {
+                    OnNewData?.Invoke(rivers, doneLinksOnThisPage, linksOnThisPage);
+                    rivers.Clear();
                     break;
                 }
                 currentPage = baseURL + currentPage;
