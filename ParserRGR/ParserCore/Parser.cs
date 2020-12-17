@@ -71,6 +71,7 @@ namespace RGRRiverParser.Parser
             returnRiver.name = document.QuerySelector("table.infobox tbody tr th.infobox-above").TextContent;
             foreach (var item in document.QuerySelectorAll("table.infobox tbody tr"))
             {
+                // Выбираем весь текст до первой '.' или 'переноса строки'.
                 var text = item.QuerySelector("th")?.TextContent?.Split('.')[0]?.Split('\n')[0]?.Trim();
 
                 if (text != null && text == "Длина")
